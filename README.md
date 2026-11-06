@@ -1,6 +1,6 @@
 # Portail ISTM Mahagi
 
-La page utilise Google Identity Services : le bouton ouvre le sélecteur officiel de comptes Google (choisir un compte ou en ajouter un), récupère le profil et redirige vers `accueil.html`.
+La page utilise Google Identity Services : le bouton ouvre le sélecteur officiel de comptes Google (choisir un compte ou en ajouter un), récupère le profil et redirige vers `accueil.html`. La fenêtre et la liste des comptes sont fournies par Google ; leur hauteur et leur apparence ne sont pas personnalisables par le site.
 
 ## Configuration du client OAuth
 

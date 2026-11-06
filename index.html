@@ -261,7 +261,26 @@
       buttonLabel.textContent = "Réessayer avec Google";
     }
 
+    function restoreLoginButton(text) {
+      message.textContent = text;
+      message.classList.remove("error");
+      button.disabled = false;
+      buttonLabel.textContent = "Se connecter avec Google";
+    }
+
     function initializeGoogleLogin() {
+      const savedProfile = sessionStorage.getItem("istmGoogleProfile");
+      if (savedProfile) {
+        try {
+          if (JSON.parse(savedProfile).email) {
+            window.location.replace("./accueil.html");
+            return;
+          }
+        } catch {
+          sessionStorage.removeItem("istmGoogleProfile");
+        }
+      }
+
       if (window.location.protocol === "file:") {
         showError("Ouvrez cette page depuis http://localhost:8000 (serveur local), pas en double-cliquant sur le fichier.");
         button.disabled = true;
@@ -316,6 +335,10 @@
           }
         },
         error_callback: error => {
+          if (error.type === "popup_closed") {
+            restoreLoginButton("Connexion annulée. Cliquez sur le bouton pour choisir un compte Google.");
+            return;
+          }
           const currentOrigin = window.location.origin;
           if (error.type === "popup_failed_to_open") {
             showError("La fenêtre Google n’a pas pu s’ouvrir. Autorisez les fenêtres pop-up pour ce site, puis réessayez.");
