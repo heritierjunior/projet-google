@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fa">
+  <title>Accueil — ISTM Mahagi</title>
+  <style>
+    :root {
+      font-family: Roboto, Arial, sans-serif;
+      color: #202124;
+      background: #f8f9fa;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+
+    body { min-width: 320px; min-height: 100vh; margin: 0; }
+
+    header {
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px clamp(20px, 5vw, 72px);
+      border-bottom: 1px solid #dadce0;
+      background: #fff;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
+    .brand-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: #e8f0fe; color: #1a73e8; }
+    .user { display: flex; align-items: center; gap: 12px; }
+    .profile { display: flex; align-items: center; gap: 10px; color: #3c4043; font-size: 13px; }
+    .profile img, .avatar-placeholder { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+    .avatar-placeholder { display: grid; place-items: center; background: #e8f0fe; color: #174ea6; font-size: 14px; font-weight: 600; }
+    .logout { border: 0; background: transparent; color: #1a73e8; font: inherit; font-size: 13px; cursor: pointer; }
+    .logout:hover { text-decoration: underline; }
+
+    main { width: min(100% - 40px, 960px); margin: 76px auto; }
+    .welcome { padding: clamp(24px, 5vw, 48px); border: 1px solid #dadce0; border-radius: 8px; background: #fff; }
+    .eyebrow { margin: 0 0 12px; color: #5f6368; font-size: 13px; }
+    h1 { margin: 0; font-size: clamp(27px, 5vw, 36px); font-weight: 400; letter-spacing: -.6px; }
+    .description { margin: 16px 0 0; color: #5f6368; font-size: 15px; line-height: 1.6; }
+    @media (max-width: 520px) {
+      header { align-items: flex-start; }
+      .profile span { display: none; }
+      main { margin-top: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M4 19V11M10 19V5M16 19v-7M22 19V8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>ISTM Mahagi</span>
+    </div>
+    <div class="user">
+      <div id="profile" class="profile"></div>
+      <button id="logout" class="logout" type="button">Se déconnecter</button>
+    </div>
+  </header>
+  <main>
+    <section class="welcome">
+      <p class="eyebrow">Accueil</p>
+      <h1 id="welcome-title">Bienvenue</h1>
+      <p class="description">Vous êtes connecté. Cet espace accueillera les fonctionnalités de l’application.</p>
+    </section>
+  </main>
+  <script>
+    const profileElement = document.getElementById("profile");
+    const rawProfile = sessionStorage.getItem("istmGoogleProfile");
+
+    if (!rawProfile) {
+      window.location.replace("./index.html");
+    } else {
+      try {
+        const profile = JSON.parse(rawProfile);
+        document.getElementById("welcome-title").textContent = `Bienvenue, ${profile.name}`;
+        const label = document.createElement("span");
+        label.textContent = profile.email;
+
+        if (profile.picture) {
+          const image = document.createElement("img");
+          image.src = profile.picture;
+          image.alt = "";
+          profileElement.append(image, label);
+        } else {
+          const avatar = document.createElement("span");
+          avatar.className = "avatar-placeholder";
+          avatar.setAttribute("aria-hidden", "true");
+          avatar.textContent = profile.name.charAt(0).toUpperCase();
+          profileElement.append(avatar, label);
+        }
+      } catch {
+        sessionStorage.removeItem("istmGoogleProfile");
+        window.location.replace("./index.html");
+      }
+    }
+
+    document.getElementById("logout").addEventListener("click", () => {
+      sessionStorage.removeItem("istmGoogleProfile");
+      window.location.replace("./index.html");
+    });
+  </script>
+</body>
+</html>

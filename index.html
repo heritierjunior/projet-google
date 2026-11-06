@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101c35">
+  <meta name="description" content="Connectez-vous au portail de l'ISTM Mahagi avec votre compte Google.">
+  <title>Connexion | Portail ISTM Mahagi</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #18243a;
+      background: #f3f6fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 48px 24px;
+      background:
+        radial-gradient(ellipse at 14% 12%, rgb(91 134 214 / 16%), transparent 34%),
+        radial-gradient(ellipse at 93% 87%, rgb(79 171 170 / 12%), transparent 29%),
+        #f3f6fb;
+    }
+
+    .layout {
+      display: grid;
+      width: min(100%, 1040px);
+      min-height: 600px;
+      grid-template-columns: minmax(0, 1fr) 440px;
+      overflow: hidden;
+      border: 1px solid #e3e9f2;
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 28px 80px rgb(34 54 88 / 13%), 0 3px 12px rgb(34 54 88 / 4%);
+    }
+
+    .story {
+      position: relative;
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 42px 44px 36px;
+      background:
+        radial-gradient(ellipse at 8% 95%, rgb(41 80 153 / 66%), transparent 48%),
+        linear-gradient(145deg, #162747 0%, #1b355e 57%, #23466f 100%);
+      color: #fff;
+    }
+
+    .story::before, .story::after {
+      position: absolute;
+      z-index: 0;
+      border: 1px solid rgb(255 255 255 / 9%);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .story::before { width: 440px; height: 440px; right: -200px; top: 95px; }
+    .story::after { width: 340px; height: 340px; right: -150px; top: 145px; }
+
+    .brand, .story-copy, .story-foot { position: relative; z-index: 1; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      place-items: center;
+      border: 1px solid rgb(255 255 255 / 20%);
+      border-radius: 13px;
+      background: rgb(255 255 255 / 10%);
+      color: #fff;
+    }
+
+    .brand-name { font-size: 14px; font-weight: 700; letter-spacing: .4px; }
+    .brand-caption { margin-top: 3px; color: #bac9df; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
+
+    .story-copy { max-width: 430px; margin: 54px 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 19px;
+      color: #c5d5ed;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before { width: 19px; height: 1px; background: #8eacd8; content: ""; }
+
+    .story h1 {
+      max-width: 400px;
+      margin: 0;
+      font-size: clamp(32px, 4vw, 46px);
+      font-weight: 570;
+      letter-spacing: -1.8px;
+      line-height: 1.12;
+    }
+
+    .story-description {
+      max-width: 360px;
+      margin: 19px 0 0;
+      color: #cfdaeb;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .story-foot { color: #b6c6dc; font-size: 11px; letter-spacing: .15px; }
+
+    .login-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 52px 44px;
+    }
+
+    .login-heading { margin: 0; font-size: 25px; font-weight: 650; letter-spacing: -.7px; }
+    .login-subtitle { margin: 10px 0 30px; color: #718096; font-size: 13px; line-height: 1.65; }
+
+    .google-button {
+      display: inline-flex;
+      width: 100%;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 1px solid #d5dce7;
+      border-radius: 9px;
+      background: #fff;
+      color: #344054;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgb(16 24 40 / 4%);
+      transition: background .16s, border-color .16s, box-shadow .16s, transform .16s;
+    }
+
+    .google-button svg { width: 19px; height: 19px; flex: 0 0 19px; }
+    .google-button:hover { transform: translateY(-1px); border-color: #b9c5d6; background: #fbfcfe; box-shadow: 0 5px 14px rgb(16 24 40 / 8%); }
+    .google-button:focus-visible { outline: 3px solid #b8cdf6; outline-offset: 3px; }
+    .google-button:disabled { transform: none; cursor: wait; opacity: .65; }
+
+    .message {
+      min-height: 38px;
+      margin: 13px 0 0;
+      color: #718096;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .message.error { color: #b42318; }
+
+    .divider { height: 1px; margin: 20px 0 16px; background: #edf0f5; }
+    .privacy-note { display: flex; align-items: flex-start; gap: 9px; color: #78869a; font-size: 11px; line-height: 1.6; }
+    .privacy-note svg { flex: 0 0 15px; margin-top: 1px; color: #6781a7; }
+    .panel-footer { margin-top: 37px; color: #a0a9b8; font-size: 10px; line-height: 1.6; }
+
+    @media (max-width: 760px) {
+      body { padding: 20px; }
+      .layout { max-width: 500px; min-height: 0; grid-template-columns: 1fr; }
+      .story { min-height: 230px; padding: 26px 28px; }
+      .story-copy { margin: 34px 0 23px; }
+      .story h1 { max-width: 400px; font-size: 31px; }
+      .story-description { margin-top: 10px; font-size: 12px; }
+      .story-foot { display: none; }
+      .login-panel { padding: 33px 28px 28px; }
+      .login-subtitle { margin-bottom: 22px; }
+      .panel-footer { margin-top: 24px; }
+    }
+
+    @media (max-width: 380px) {
+      body { padding: 12px; }
+      .story { padding: 22px; }
+      .login-panel { padding: 28px 22px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <section class="story" aria-label="Portail académique">
+      <div class="brand">
+        <span class="logo-mark" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3 4.5 6v5.3c0 4.6 3.2 8.3 7.5 9.7 4.3-1.4 7.5-5.1 7.5-9.7V6L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M8.5 12.2 10.8 14.4 15.8 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>
+          <span class="brand-name">ISTM MAHAGI</span>
+          <span class="brand-caption">Portail académique</span>
+        </span>
+      </div>
+      <div class="story-copy">
+        <p class="eyebrow">Espace numérique</p>
+        <h1>Bienvenue sur votre portail.</h1>
+        <p class="story-description">Connectez-vous avec votre compte Google pour accéder à votre espace ISTM Mahagi.</p>
+      </div>
+      <div class="story-foot">Une connexion simple et sécurisée pour votre espace.</div>
+    </section>
+
+    <section class="login-panel" aria-labelledby="login-title">
+      <div>
+        <h2 id="login-title" class="login-heading">Connectez-vous</h2>
+        <p class="login-subtitle">Choisissez votre compte Google pour continuer vers votre espace.</p>
+
+        <button id="google-button" class="google-button" type="button" aria-label="Se connecter avec Google" disabled>
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" transform="translate(2 2) scale(.92)"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.56 5.87c4.41-4.07 6.96-10.06 6.96-17.52z" transform="translate(1 1) scale(.94)"/>
+            <path fill="#FBBC05" d="M10.53 28.59a14.4 14.4 0 0 1 0-9.18l-7.98-6.2a23.9 23.9 0 0 0 0 21.58l7.98-6.2z" transform="translate(2 2) scale(.92)"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.56-5.87c-2.1 1.41-4.8 2.25-8.35 2.25-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48z" transform="translate(2 1) scale(.92)"/>
+          </svg>
+          <span id="button-label">Chargement de Google…</span>
+        </button>
+
+        <p id="message" class="message" role="status" aria-live="polite">Google vous proposera de choisir un compte ou d’en ajouter un.</p>
+        <div class="divider"></div>
+        <div class="privacy-note">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2.5 3.5 5.2v4.6c0 3.8 2.7 6.9 6.5 8.1 3.8-1.2 6.5-4.3 6.5-8.1V5.2L10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="m7.4 10 1.7 1.7 3.6-3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Votre mot de passe est saisi uniquement sur la page officielle de Google.</span>
+        </div>
+      </div>
+      <div class="panel-footer">© 2026 ISTM Mahagi<br>En vous connectant, vous utilisez votre compte Google personnel ou institutionnel.</div>
+    </section>
+  </main>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    const GOOGLE_CLIENT_ID = "689157069231-bs9q0njbl6ljbfnisi8fdajgcnc68bds.apps.googleusercontent.com";
+    const button = document.getElementById("google-button");
+    const buttonLabel = document.getElementById("button-label");
+    const message = document.getElementById("message");
+    let tokenClient;
+
+    function showError(text) {
+      message.textContent = text;
+      message.classList.add("error");
+      button.disabled = false;
+      buttonLabel.textContent = "Réessayer avec Google";
+    }
+
+    function initializeGoogleLogin() {
+      if (window.location.protocol === "file:") {
+        showError("Ouvrez cette page depuis http://localhost:8000 (serveur local), pas en double-cliquant sur le fichier.");
+        button.disabled = true;
+        return;
+      }
+
+      if (!GOOGLE_CLIENT_ID.endsWith(".apps.googleusercontent.com")) {
+        showError("Configuration requise : ajoutez l’ID client OAuth Web dans la page.");
+        button.disabled = true;
+        return;
+      }
+
+      if (!window.google || !google.accounts || !google.accounts.oauth2) {
+        showError("Google ne répond pas. Vérifiez votre connexion Internet et rechargez la page.");
+        return;
+      }
+
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: "openid email profile",
+        callback: async response => {
+          if (response.error || !response.access_token) {
+            showError(`La connexion Google a échoué${response.error ? ` : ${response.error}` : "."}`);
+            return;
+          }
+
+          button.disabled = true;
+          buttonLabel.textContent = "Connexion en cours…";
+          message.textContent = "Vérification de votre compte Google…";
+          message.classList.remove("error");
+
+          try {
+            const profileResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+              headers: { Authorization: `Bearer ${response.access_token}` }
+            });
+            const profile = await profileResponse.json();
+            if (!profileResponse.ok) {
+              throw new Error(profile.error_description || profile.error || "Impossible de récupérer le profil Google.");
+            }
+            if (!profile.email || profile.email_verified !== true) {
+              throw new Error("Google n’a pas confirmé l’adresse e-mail de ce compte.");
+            }
+
+            sessionStorage.setItem("istmGoogleProfile", JSON.stringify({
+              name: profile.name || profile.email,
+              email: profile.email,
+              picture: profile.picture || ""
+            }));
+            window.location.assign("./accueil.html");
+          } catch (error) {
+            showError(error.message);
+          }
+        },
+        error_callback: error => {
+          const currentOrigin = window.location.origin;
+          if (error.type === "popup_failed_to_open") {
+            showError("La fenêtre Google n’a pas pu s’ouvrir. Autorisez les fenêtres pop-up pour ce site, puis réessayez.");
+            return;
+          }
+          showError(`Google a fermé ou refusé la demande (${error.type || "erreur OAuth"}). Dans Google Cloud Console → Identifiants → client OAuth Web, ajoutez exactement ${currentOrigin} aux origines JavaScript autorisées. Vérifiez aussi que votre compte est dans les utilisateurs test de l’écran de consentement.`);
+        }
+      });
+
+      button.disabled = false;
+      buttonLabel.textContent = "Se connecter avec Google";
+      button.addEventListener("click", () => {
+        button.disabled = true;
+        buttonLabel.textContent = "Ouverture de Google…";
+        message.classList.remove("error");
+        message.textContent = "Choisissez votre compte Google pour continuer.";
+        tokenClient.requestAccessToken({ prompt: "select_account" });
+      });
+    }
+
+    window.addEventListener("load", initializeGoogleLogin, { once: true });
+  </script>
+</body>
+</html>
